@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Localisation</title>
+    <meta charset="utf-8" />
+	
+	<!-- Bibliothèque de base: Leaflet-->
+    <link rel="stylesheet" href="libs/leaflet.css"/>
+	<script src="libs/leaflet.js"></script>
+	
+	<!-- Draw-->
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw-src.js"></script>
+	<link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css">
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.js"></script>
+	
+	<!-- Slide menu-->
+	<link rel="stylesheet" href="libs/slide_menu/SlideMenu.css" />
+	<script src="libs/slide_menu/SlideMenu.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	
+	<!-- GeoCoder-->
+	<link rel="stylesheet" href="libs/Control.OSMGeocoder.css"/>
+	<script src="libs/Control.OSMGeocoder.js"></script>
+	
+	<!-- Overview-->
+	<link rel="stylesheet" href="libs/overview/MiniMap.css" />
+	<script src="libs/overview/MiniMap.js"></script>
+ 
+	<!-- Localisation-->
+	<link rel="stylesheet" href="libs/L.Control.Locate.min.css" />
+    <script src="libs/L.Control.Locate.js"></script>
+	
+	<!-- Mouse position-->
+	<link rel="stylesheet" href="libs/L.Control.MousePosition.css" />
+    <script src="libs/L.Control.MousePosition.js"></script>
+	
+	<!-- Navigation Bar-->
+    <link rel="stylesheet" href="libs/NavBar/NavBar.css"/>
+	<script src="libs/NavBar/NavBar.js"></script>
+	
+	<!-- Font-->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<!-- jquery-->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+	
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+	
+		///// Fond de base
+		var OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+		var WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}');
+	
+	
+		///// Configuration de la map	
+		var map = L.map('map', {
+				layers: [OpenStreetMap], /// fond de base
+				center: [36.3, 8.76],/// coordonnées
+				zoom: 14	//// zoom par defaut
+			});
+		
+
+		/////layers de base		
+		var baseLayers = {
+			"Open Street Map": OpenStreetMap,
+			"World Imagery": WorldImagery
+		};
+
+		
+		
+						  
+		///// Groupe layers
+		var overlays = {
+			"HABITAT": HABITAT,
+		
+		};
+		//// Add the Find to the map 
+		var osmGeocoder = new L.Control.OSMGeocoder();
+        map.addControl(osmGeocoder);
+				
+		///// Add the Overview to the map 
+        var osm2 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+		var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(map);
+	
+	
+		///// Add the scale control to the map
+		L.control.scale().addTo(map);
+			
+		///// Add the Navigation Bar to the map 
+		L.control.navbar({position: 'topleft'}).addTo(map);
+			
+		///// Add the geolocate control to the map
+		L.control.locate().addTo(map);
+		
+		///// Add the mouse position to the map 
+		L.control.mousePosition().addTo(map);
+		
+		///// Add the draw feature to the map
+		var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+
+    </script>
+	<script type="text/javascript">
+		//Analytics
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-36489204-2']);
+			_gaq.push(['_trackPageview']);	  
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	
+</body>
+</html>
